@@ -66,7 +66,7 @@ export async function POST(request: Request) {
   const streamingData = new StreamData();
   const customModel = createCustomModel(model.model, model.apiIdentifier);
 
-  const result = await streamText({
+  const result = streamText({
     model: customModel,
     system: systemPrompt,
     messages: coreMessages,
@@ -112,7 +112,7 @@ export async function POST(request: Request) {
             content: '',
           });
 
-          const { fullStream } = await streamText({
+          const { fullStream } = streamText({
             model: customModel,
             system:
               'Write about the given topic. Markdown is supported. Use headings wherever appropriate.',
@@ -174,7 +174,7 @@ export async function POST(request: Request) {
             content: document.title,
           });
 
-          const { fullStream } = await streamText({
+          const { fullStream } = streamText({
             model: customModel,
             system:
               'You are a helpful writing assistant. Based on the description, please update the piece of writing.',
@@ -296,11 +296,12 @@ export async function POST(request: Request) {
         },
       },
     },
-    onFinish: async ({ responseMessages }) => {
+    onFinish: async (stepResult) => {
       if (session.user?.id) {
         try {
-          const responseMessagesWithoutIncompleteToolCalls =
-            sanitizeResponseMessages(responseMessages);
+          const responseMessagesWithoutIncompleteToolCalls = sanitizeResponseMessages(
+            stepResult.response.messages
+          );
 
           await saveMessages({
             messages: responseMessagesWithoutIncompleteToolCalls.map((message) => {
@@ -322,7 +323,7 @@ export async function POST(request: Request) {
             }),
           });
         } catch (error) {
-          console.error('Failed to save chat');
+          console.error('Failed to save chat', error);
         }
       }
 
