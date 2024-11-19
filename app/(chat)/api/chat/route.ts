@@ -327,7 +327,7 @@ export async function POST(request: Request) {
         }
       }
 
-      streamingData.close();
+      await streamingData.close();
     },
     experimental_telemetry: {
       isEnabled: true,
