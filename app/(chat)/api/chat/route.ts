@@ -325,9 +325,8 @@ export async function POST(request: Request) {
         } catch (error) {
           console.error('Failed to save chat', error);
         }
+        streamingData.close();
       }
-
-      await streamingData.close();
     },
     experimental_telemetry: {
       isEnabled: true,

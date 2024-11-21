@@ -12,13 +12,14 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
         // @ts-expect-error
         <pre
           {...props}
-          className={`${className} text-sm w-[80dvw] md:max-w-[500px] overflow-x-scroll bg-zinc-100 p-3 rounded-lg mt-2 dark:bg-zinc-800`}
+          className={`${className} text-sm w-[80dvw] md:max-w-[500px] overflow-x-auto whitespace-pre-wrap break-all  bg-zinc-100 p-3 rounded-lg mt-2 dark:bg-zinc-800`}
         >
           <code className={match[1]}>{children}</code>
         </pre>
       ) : (
         <code
-          className={`${className} text-sm bg-zinc-100 dark:bg-zinc-800 py-0.5 px-1 rounded-md`}
+          style={{ wordBreak: 'break-word' }}
+          className={`${className} overflow-x-auto whitespace-pre-wrap break-all  text-sm bg-zinc-100 dark:bg-zinc-800 py-0.5 px-1 rounded-md`}
           {...props}
         >
           {children}
@@ -27,28 +28,28 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
     },
     ol: ({ node, children, ...props }) => {
       return (
-        <ol className="list-decimal list-outside ml-4" {...props}>
+        <ol className='list-decimal list-outside ml-4' {...props}>
           {children}
         </ol>
       );
     },
     li: ({ node, children, ...props }) => {
       return (
-        <li className="py-1" {...props}>
+        <li className='py-1' {...props}>
           {children}
         </li>
       );
     },
     ul: ({ node, children, ...props }) => {
       return (
-        <ul className="list-decimal list-outside ml-4" {...props}>
+        <ul className='list-decimal list-outside ml-4' {...props}>
           {children}
         </ul>
       );
     },
     strong: ({ node, children, ...props }) => {
       return (
-        <span className="font-semibold" {...props}>
+        <span className='font-semibold' {...props}>
           {children}
         </span>
       );
@@ -56,54 +57,49 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
     a: ({ node, children, ...props }) => {
       return (
         // @ts-expect-error
-        <Link
-          className="text-blue-500 hover:underline"
-          target="_blank"
-          rel="noreferrer"
-          {...props}
-        >
+        <Link className='text-blue-500 hover:underline' target='_blank' rel='noreferrer' {...props}>
           {children}
         </Link>
       );
     },
     h1: ({ node, children, ...props }) => {
       return (
-        <h1 className="text-3xl font-semibold mt-6 mb-2" {...props}>
+        <h1 className='text-3xl font-semibold mt-6 mb-2' {...props}>
           {children}
         </h1>
       );
     },
     h2: ({ node, children, ...props }) => {
       return (
-        <h2 className="text-2xl font-semibold mt-6 mb-2" {...props}>
+        <h2 className='text-2xl font-semibold mt-6 mb-2' {...props}>
           {children}
         </h2>
       );
     },
     h3: ({ node, children, ...props }) => {
       return (
-        <h3 className="text-xl font-semibold mt-6 mb-2" {...props}>
+        <h3 className='text-xl font-semibold mt-6 mb-2' {...props}>
           {children}
         </h3>
       );
     },
     h4: ({ node, children, ...props }) => {
       return (
-        <h4 className="text-lg font-semibold mt-6 mb-2" {...props}>
+        <h4 className='text-lg font-semibold mt-6 mb-2' {...props}>
           {children}
         </h4>
       );
     },
     h5: ({ node, children, ...props }) => {
       return (
-        <h5 className="text-base font-semibold mt-6 mb-2" {...props}>
+        <h5 className='text-base font-semibold mt-6 mb-2' {...props}>
           {children}
         </h5>
       );
     },
     h6: ({ node, children, ...props }) => {
       return (
-        <h6 className="text-sm font-semibold mt-6 mb-2" {...props}>
+        <h6 className='text-sm font-semibold mt-6 mb-2' {...props}>
           {children}
         </h6>
       );
@@ -119,5 +115,5 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
 
 export const Markdown = memo(
   NonMemoizedMarkdown,
-  (prevProps, nextProps) => prevProps.children === nextProps.children,
+  (prevProps, nextProps) => prevProps.children === nextProps.children
 );

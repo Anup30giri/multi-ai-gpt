@@ -1,5 +1,6 @@
 // Define your models here.
 
+import type { ModelProvider } from '@/types/types';
 import { CLAUDE_SONNET_IDENTIFIER } from '../constants';
 
 export interface Model {
@@ -7,7 +8,7 @@ export interface Model {
   label: string;
   apiIdentifier: string;
   description: string;
-  model: 'openai' | 'bedrock';
+  model: ModelProvider;
 }
 
 export const models: Array<Model> = [
@@ -31,6 +32,13 @@ export const models: Array<Model> = [
     apiIdentifier: CLAUDE_SONNET_IDENTIFIER,
     description: 'Fast and powerful model for complex tasks',
     model: 'bedrock',
+  },
+  {
+    id: 'gemini-1.5-flash-latest',
+    label: 'Gemini 1.5 Flash',
+    apiIdentifier: 'gemini-1.5-flash-latest',
+    description: 'Fast and powerful model for complex tasks',
+    model: 'gemini',
   },
 ] as const;
 
